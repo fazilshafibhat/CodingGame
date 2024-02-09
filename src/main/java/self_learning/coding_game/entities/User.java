@@ -8,11 +8,28 @@ public class User extends BaseEntity {
     private final String name;
     private final Integer score;
     private List<Contest> contests;
+    private UserContestQuestions userContestQuestions;
+
+    public User(User user) {
+        this(user.id, user.name, user.score, user.contests);
+        userContestQuestions = user.userContestQuestions;
+    }
+
+    public User(String id, String name, Integer score, List<Contest> contests) {
+        this(id, name, score);
+        this.contests = contests;
+    }
+
+    public User(String id, String name, Integer score) {
+        this(name, score);
+        this.id = id;
+        this.userContestQuestions = new UserContestQuestions();
+    }
 
     public User(String name, Integer score) {
         this.name = name;
         this.score = score;
-        this.contests = new ArrayList<>();
+        this.contests = new ArrayList<Contest>();
     }
 
     public String getName() {
@@ -23,22 +40,29 @@ public class User extends BaseEntity {
         return score;
     }
 
+    public void addContest(Contest contest) {
+        contests.add(contest);
+    }
+
+    public void deleteContest(Contest contest) {
+        contests.removeIf(c -> c.getId() == contest.getId());
+    }
+
     public List<Contest> getContests() {
         return contests.stream().collect(Collectors.toList());
     }
 
-    public void addContest(Contest contest) {
-        contests.add(contest);
-    }
-    public void removeContest(Contest contest) {
-        contests.removeIf(c -> c.getId() == contest.getId());
+    public boolean checkIfContestExists(Contest contest) {
+        return contests.stream()
+                .anyMatch(c -> c.getContestStatus().equals(contest.getContestStatus()));
     }
 
+    public void addContestQuestion(Contest contest, List<Question> qList) {
+        userContestQuestions.addContestQuestion(contest, qList);
+    }
 
-    @Override
-    public String getId() {
-        // TODO Auto-generated method stub
-        return super.getId();
+    public List<Question> getQuestionsByContest(Contest contest) {
+        return userContestQuestions.getQuestionsByContest(contest);
     }
 
     @Override
@@ -68,6 +92,8 @@ public class User extends BaseEntity {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", contests=" + contests + ", name=" + name + ", score=" + score + "]";
+        return "User [id=" + id + ", contests=" + contests + ", name=" + name + ", score=" + score
+                + "]";
     }
+
 }

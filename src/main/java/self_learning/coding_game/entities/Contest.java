@@ -1,5 +1,6 @@
 package self_learning.coding_game.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,30 +10,42 @@ public class Contest extends BaseEntity {
     private final String name;
     private final List<Question> questions;
     private final Level level;
-    private final User contestCreator;
-    private final ContestStatus contestStatus;
+    private final User creator;
+    private ContestStatus contestStatus;
 
-    public Contest(String name, List<Question> questions, Level level, User contestCreator,
+    public Contest(Contest contest) {
+        this(contest.id, contest.name, contest.questions, contest.level, contest.creator,
+                contest.contestStatus);
+    }
+
+    public Contest(String id, String name, List<Question> questions, Level level, User creator,
+            ContestStatus contestStatus) {
+        this(name, questions, level, creator, contestStatus);
+        this.id = id;
+    }
+
+    public Contest(String name, List<Question> questions, Level level, User creator,
             ContestStatus contestStatus) {
         this.name = name;
-        // this.questions = new ArrayList<>();
+        this.questions = new ArrayList<>();
         validateQuestionList(questions, level);
-        this.questions=questions;
         this.level = level;
-        this.contestCreator = contestCreator;
+        this.creator = creator;
         this.contestStatus = contestStatus;
     }
 
-    private void validateQuestionList(List<Question> qList, Level contestLevel) {
-        if (qList.isEmpty()) {
-            throw new InvalidContestException("Question list is empty!");
-        }
+    private void validateQuestionList(List<Question> qList, Level contestLevel)
+            throws InvalidContestException {
         for (Question question : qList) {
-            if (!question.getLevel().equals(contestLevel)) {
+            if (!contestLevel.equals(question.getLevel())) {
                 throw new InvalidContestException(
-                        "All questions must have the same difficulty level as contest level.");
+                        "All questions must have the same level as the contest level!");
             }
         }
+    }
+
+    public void endContest() {
+        this.contestStatus = ContestStatus.ENDED;
     }
 
     public String getName() {
@@ -47,18 +60,12 @@ public class Contest extends BaseEntity {
         return level;
     }
 
-    public User getContestCreator() {
-        return contestCreator;
+    public User getCreator() {
+        return creator;
     }
 
     public ContestStatus getContestStatus() {
         return contestStatus;
-    }
-
-    @Override
-    public String getId() {
-        // TODO Auto-generated method stub
-        return super.getId();
     }
 
     @Override
@@ -88,7 +95,9 @@ public class Contest extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Contest [id=" + id + ", name=" + name + ", level=" + level + ", creator=" + contestCreator.getName()
-                + ", contestStatus=" + contestStatus + ", questions=" + questions + "]";
+        return "Contest [id=" + id + ", name=" + name + ", level=" + level + ", creator="
+                + creator.getName() + ", contestStatus=" + contestStatus + ", questions="
+                + questions + "]";
     }
+
 }

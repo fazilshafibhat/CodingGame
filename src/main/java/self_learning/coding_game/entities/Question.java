@@ -5,24 +5,19 @@ public class Question extends BaseEntity {
     private final Level level;
     private final Integer score;
 
+    public Question(Question question) {
+        this(question.id, question.title, question.level, question.score);
+    }
+
+    public Question(String id, String title, Level level, Integer score) {
+        this(title, level, score);
+        this.id = id;
+    }
+
     public Question(String title, Level level, Integer score) {
         this.title = title;
         this.level = level;
         this.score = score;
-    }
-public String getTitle() {
-    return title;
-}
-public Level getLevel() {
-    return level;
-}
-public Integer getScore() {
-    return score;
-}
-    @Override
-    public String getId() {
-        // TODO Auto-generated method stub
-        return super.getId();
     }
 
     @Override
@@ -48,6 +43,18 @@ public Integer getScore() {
         } else if (!id.equals(other.id))
             return false;
         return true;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public Integer getScore() {
+        return score;
     }
 
     @Override
