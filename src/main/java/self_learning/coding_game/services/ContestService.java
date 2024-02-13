@@ -66,6 +66,7 @@ public class ContestService implements IContestService {
         List<Question> randomQuestionList = new ArrayList<>(questions);
         Collections.shuffle(randomQuestionList);
         return randomQuestionList.subList(0, numQuestion);
+        // return Collections.emptyList();
     }
 
     @Override
@@ -108,17 +109,14 @@ public class ContestService implements IContestService {
 
     private void validateContest(final Contest contest, final String contestCreator)
             throws InvalidContestException {
+        if (!contest.getCreator().getName().equals(contestCreator)) {
+            throw new InvalidContestException();
+        }
         if (contest.getContestStatus().equals(ContestStatus.IN_PROGRESS)) {
-            throw new InvalidContestException("Cannot Run Contest. Contest for given id:"
-                    + contest.getId() + " is in progress!");
+            throw new InvalidContestException();
         }
         if (contest.getContestStatus().equals(ContestStatus.ENDED)) {
-            throw new InvalidContestException(
-                    "Cannot Run Contest. Contest for given id:" + contest.getId() + " is ended!");
-        }
-        if (!contest.getCreator().getName().equals(contestCreator)) {
-            throw new InvalidContestException("Cannot Run Contest. User:" + contestCreator
-                    + " is not the contest creator of contest id:" + contest.getId());
+            throw new InvalidContestException();
         }
     }
 

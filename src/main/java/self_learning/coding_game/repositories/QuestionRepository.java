@@ -1,4 +1,5 @@
 package self_learning.coding_game.repositories;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +9,6 @@ import java.util.stream.Collectors;
 
 import self_learning.coding_game.entities.Level;
 import self_learning.coding_game.entities.Question;
-
 
 public class QuestionRepository implements IQuestionRepository {
 
@@ -54,12 +54,10 @@ public class QuestionRepository implements IQuestionRepository {
 
     @Override
     public void delete(Question entity) {
-
     }
 
     @Override
     public void deleteById(String id) {
-
     }
 
     @Override

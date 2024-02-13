@@ -56,23 +56,16 @@ public class ContestRepository implements IContestRepository {
 
     @Override
     public void delete(Contest entity) {
-
     }
 
     @Override
     public void deleteById(String id) {
-
     }
 
     @Override
     public long count() {
-        // TODO Auto-generated method stub
         return 0;
     }
-
-    // TODO: CRIO_TASK_MODULE_SERVICES
-    // Find all the list of Contest Present in the Repository provided Level
-    // Tip:- Use Java Streams
 
     @Override
     public List<Contest> findAllContestLevelWise(Level level) {

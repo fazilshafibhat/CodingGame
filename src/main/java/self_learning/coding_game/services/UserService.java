@@ -101,5 +101,4 @@ public class UserService implements IUserService {
                 return new UserRegistrationDto(contest.getName(), user.getName(),
                                 RegistrationStatus.NOT_REGISTERED);
         }
-
 }

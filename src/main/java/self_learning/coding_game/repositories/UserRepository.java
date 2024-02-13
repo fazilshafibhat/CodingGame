@@ -34,10 +34,6 @@ public class UserRepository implements IUserRepository {
         return entity;
     }
 
-    // TODO: CRIO_TASK_MODULE_SERVICES
-    // Find all the list of User Present in the Repository
-    // Tip:- Use Java Streams
-
     @Override
     public List<User> findAll() {
         List<User> userList = userMap.values().stream().collect(Collectors.toList());
@@ -51,6 +47,7 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public boolean existsById(String id) {
+
         return false;
     }
 

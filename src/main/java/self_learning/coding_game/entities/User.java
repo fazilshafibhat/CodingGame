@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class User extends BaseEntity {
+
     private final String name;
     private final Integer score;
     private List<Contest> contests;
@@ -92,8 +93,7 @@ public class User extends BaseEntity {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", contests=" + contests + ", name=" + name + ", score=" + score
-                + "]";
+        return "User [id=" + id + ", contests=" + contests + ", name=" + name + ", score=" + score + "]";
     }
 
 }

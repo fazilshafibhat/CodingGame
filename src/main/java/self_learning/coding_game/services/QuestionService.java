@@ -30,5 +30,4 @@ public class QuestionService implements IQuestionService {
         }
         return expectedQuestionList;
     }
-
 }
